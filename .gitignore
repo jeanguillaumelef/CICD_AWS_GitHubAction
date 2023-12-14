@@ -1,0 +1,27 @@
+# Dependency directories
+node_modules/
+
+# Output of the compiler
+dist/
+
+# Environment variables
+.env
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# AWS SAM
+.sam/
+.aws-sam/
+
+# AWS CLI
+.aws/
+
+# Jest
+coverage/

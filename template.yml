@@ -1,0 +1,58 @@
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: HelloWorldController.helloWorld
+      Events:
+        LoadBalancer:
+          Type: ALB
+          Properties:
+            ListenerArn: !Ref MyLoadBalancerListener
+            Priority: 1
+            Conditions:
+              Path: /hello
+
+  MyLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      Subnets: 
+        - subnet-abcde012
+        - subnet-bcde012a
+        - subnet-cde012ab
+
+  MyLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref HelloWorldFunctionAlias
+
+  HelloWorldFunctionAlias:
+    Type: AWS::Lambda::Alias
+    Properties:
+      Name: live
+      FunctionName: !Ref HelloWorldFunction
+      FunctionVersion: $LATEST
+
+  HelloWorldFunctionInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref HelloWorldFunction
+      Principal: elasticloadbalancing.amazonaws.com
+      SourceArn: !GetAtt MyLoadBalancer.Arn
+
+  MyIAMUser:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: ManageHelloWorldFunction
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:*
+                Resource: !GetAtt HelloWorldFunction.Arn
