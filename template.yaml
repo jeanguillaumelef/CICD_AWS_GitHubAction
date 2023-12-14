@@ -4,6 +4,7 @@ Resources:
     Properties:
       CodeUri: .
       Handler: HelloWorldController.helloWorld
+      Runtime: nodejs18.x
 
   MyTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -11,6 +12,7 @@ Resources:
       Targets:
         - Id: !GetAtt HelloWorldFunction.Arn
       TargetType: lambda
+      VpcId: vpc-training
 
   MyLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
