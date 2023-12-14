@@ -21,7 +21,7 @@ Resources:
     Properties:
       Type: application
       Subnets: 
-        - subnet-lbtraining
+        - subnet-08e6f8f2e55917efe
 
   MyLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
