@@ -37,5 +37,5 @@ jobs:
       run: sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket cicd-bucket2 --region $AWS_REGION
 
     - name: Deploy AWS SAM application
-      run: sam deploy --template-file packaged.yaml --stack-name my-stack --capabilities CAPABILITY_IAM
+      run: sam deploy --template-file packaged.yaml --stack-name my-stack --capabilities CAPABILITY_IAM -region $AWS_REGION
       
