@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { HelloWorldController } from './controllers/HelloWorldController';
+import { HelloWorldController } from './src/controllers/HelloWorldController';
 
 const app = express();
 app.use(bodyParser.json());
