@@ -4,14 +4,13 @@ Resources:
     Properties:
       CodeUri: .
       Handler: HelloWorldController.helloWorld
-      Events:
-        LoadBalancer:
-          Type: ALB
-          Properties:
-            ListenerArn: !Ref MyLoadBalancerListener
-            Priority: 1
-            Conditions:
-              Path: /hello
+
+  MyTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Targets:
+        - Id: !GetAtt HelloWorldFunction.Arn
+      TargetType: lambda
 
   MyLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -27,7 +26,7 @@ Resources:
     Properties:
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref HelloWorldFunctionAlias
+          TargetGroupArn: !Ref MyTargetGroup
 
   HelloWorldFunctionAlias:
     Type: AWS::Lambda::Alias
