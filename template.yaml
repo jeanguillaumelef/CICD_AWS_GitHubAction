@@ -22,6 +22,7 @@ Resources:
       Type: application
       Subnets: 
         - subnet-08e6f8f2e55917efe
+        - subnet-00e54ae139d945d59
 
   MyLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
