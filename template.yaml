@@ -14,7 +14,6 @@ Resources:
       Targets:
         - Id: !GetAtt HelloWorldFunction.Arn
       TargetType: lambda
-      VpcId: vpc-training
 
   MyLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
