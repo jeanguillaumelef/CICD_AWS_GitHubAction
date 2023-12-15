@@ -8,43 +8,6 @@ Resources:
       Handler: HelloWorldController.helloWorld
       Runtime: nodejs18.x
 
-  MyTargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      Targets:
-        - Id: !GetAtt HelloWorldFunction.Arn
-      TargetType: lambda
-
-  MyLoadBalancer:
-    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
-    Properties:
-      Type: application
-      Subnets: 
-        - subnet-08e6f8f2e55917efe
-        - subnet-00e54ae139d945d59
-
-  MyLoadBalancerListener:
-    Type: AWS::ElasticLoadBalancingV2::Listener
-    Properties:
-      DefaultActions:
-        - Type: forward
-          TargetGroupArn: !Ref MyTargetGroup
-
-  HelloWorldFunctionAlias:
-    Type: AWS::Lambda::Alias
-    Properties:
-      Name: live
-      FunctionName: !Ref HelloWorldFunction
-      FunctionVersion: $LATEST
-
-  HelloWorldFunctionInvokePermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref HelloWorldFunction
-      Principal: elasticloadbalancing.amazonaws.com
-      SourceArn: !GetAtt MyLoadBalancer.Arn
-
   MyIAMUser:
     Type: AWS::IAM::User
     Properties:
